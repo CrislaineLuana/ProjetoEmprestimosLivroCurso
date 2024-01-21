@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ProjetoEmprestimosLivroCurso.Models;
 
 namespace ProjetoEmprestimosLivroCurso.Data
 {
@@ -7,5 +8,8 @@ namespace ProjetoEmprestimosLivroCurso.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
+
+        public DbSet<LivrosModel> Livros { get; set; }
+
     }
 }
