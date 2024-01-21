@@ -1,7 +1,9 @@
-﻿namespace ProjetoEmprestimosLivroCurso.Services.LivroService
+﻿using ProjetoEmprestimosLivroCurso.Models;
+
+namespace ProjetoEmprestimosLivroCurso.Services.LivroService
 {
     public interface ILivroInterface
     {
-
+        Task<List<LivrosModel>> BuscarLivros();
     }
 }
