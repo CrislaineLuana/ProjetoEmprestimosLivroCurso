@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetoEmprestimosLivroCurso.Dto;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
 
@@ -17,5 +18,16 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             var livros = await _livroInterface.BuscarLivros();
             return View(livros);
         }
+
+        [HttpGet]
+        public ActionResult Cadastrar()
+        {
+            return View();
+        }
+
+
+       
+
+
     }
 }

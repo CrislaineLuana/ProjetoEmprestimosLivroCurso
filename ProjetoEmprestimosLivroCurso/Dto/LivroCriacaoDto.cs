@@ -8,8 +8,6 @@ namespace ProjetoEmprestimosLivroCurso.Dto
         public string Titulo { get; set; } = string.Empty;
         [Required(ErrorMessage = "Insira um descrição!")]
         public string Descricao { get; set; } = string.Empty;
-        [Required(ErrorMessage = "Insira um capa!")]
-        public string Capa { get; set; } = string.Empty;
         [Required(ErrorMessage = "Insira o código ISBN!")]
         public string ISBN { get; set; } = string.Empty;
         [Required(ErrorMessage = "Insira o autor!")]

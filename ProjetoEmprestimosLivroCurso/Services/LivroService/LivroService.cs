@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjetoEmprestimosLivroCurso.Data;
+using ProjetoEmprestimosLivroCurso.Dto;
 using ProjetoEmprestimosLivroCurso.Models;
 
 namespace ProjetoEmprestimosLivroCurso.Services.LivroService
@@ -26,5 +27,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
                 throw new Exception(ex.Message);
             }
         }
+
+       
     }
 }
