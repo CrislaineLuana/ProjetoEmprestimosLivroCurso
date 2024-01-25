@@ -18,21 +18,6 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             _caminhoServidor = sistema.WebRootPath;
         }
 
-        public async Task<List<LivrosModel>> BuscarLivros()
-        {
-            try
-            {
-
-                var livros = await _context.Livros.ToListAsync();
-                return livros;
-
-            }catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
-        }
-
         public async Task<LivrosModel> BuscarLivroPorId(int? id)
         {
             try
@@ -46,6 +31,22 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
             catch (Exception ex)
             {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<List<LivrosModel>> BuscarLivros()
+        {
+            try
+            {
+
+                var livros = await _context.Livros.ToListAsync();
+                return livros;
+
+            }
+            catch (Exception ex)
+            {
+
                 throw new Exception(ex.Message);
             }
         }

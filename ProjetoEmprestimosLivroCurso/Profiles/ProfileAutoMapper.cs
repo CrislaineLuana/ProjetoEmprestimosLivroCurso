@@ -11,6 +11,7 @@ namespace ProjetoEmprestimosLivroCurso.Profiles
         {
 
             CreateMap<LivroCriacaoDto, LivrosModel>();
+            CreateMap<LivrosModel, LivroEdicaoDto>();
         }
     }
 }

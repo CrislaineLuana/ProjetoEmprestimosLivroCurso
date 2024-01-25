@@ -20,7 +20,7 @@
 
     <div class="btn-box d-flex justify-content-between align-items-center mb-3">
         <h2>Cadastro de livros!</h2>
-        <a class="btn btn-success" asp-action="Cadastrar" asp-controller="Livro"><i class="bi bi-plus-circle" ></i>  Cadastrar novo livro</a>
+        <a class="btn btn-success" asp-action="Cadastrar" asp-controller="Livro"><i class="bi bi-plus-circle"></i>  Cadastrar novo livro</a>
     </div>
 
     <table class="table table-hover" id="livros">
@@ -37,23 +37,23 @@
         </thead>
         <tbody>
 
-            @if(Model != null)
+            @if (Model != null)
             {
                 @if (Model.Count() > 0)
                 {
-                    @foreach(var livro in Model)
+                    @foreach (var livro in Model)
                     {
 
                         <tr>
-                            @if(livro.Capa != null)
+                            @if (livro.Capa != null)
                             {
                                 <td>
                                     <img src="imagem/@livro.Capa" style="width:50px; height: 50px" />
                                 </td>
-                            }else
+                            }
+                            else
                             {
                                 <td>
-                                    
                                 </td>
                             }
 
@@ -66,20 +66,20 @@
                             <td><i class="bi bi-calendar"></i>@livro.DataDeCadastro</td>
                             <td>
                                 <a class="btn btn-warning" asp-action="Detalhes" asp-controller="Livro" asp-route-id="@livro.Id"><i class="bi bi-file-earmark-zip"></i>Detalhes</a>
-                                <a class="btn btn-info"><i class="bi bi-pencil"></i>Editar</a>
+                                <a class="btn btn-info" asp-action="Editar" asp-controller="Livro" asp-route-id="@livro.Id"><i class="bi bi-pencil"></i>Editar</a>
                             </td>
                         </tr>
                     }
-                   
+
                 }
                 else
                 {
                     <tr><td colspan="6" class="text-center">Sem Livros Registrados!</td></tr>
                 }
-               
+
             }
 
-            
+
 
 
 
