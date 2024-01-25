@@ -9,6 +9,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
         Task<LivrosModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto);
         bool VerificaSeJaExisteCadastro(LivroCriacaoDto livroCriacaoDto);
         Task<LivrosModel> BuscarLivroPorId(int? id);
+        Task<LivrosModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto);
 
     }
 }

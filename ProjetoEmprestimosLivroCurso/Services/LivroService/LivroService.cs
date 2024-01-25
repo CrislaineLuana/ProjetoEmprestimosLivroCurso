@@ -51,24 +51,13 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
         }
 
+
         public async Task<LivrosModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto)
         {
             try
             {
-                var codigoUnico = Guid.NewGuid().ToString();
-                var nomeCaminhoImagem = foto.FileName.Replace(" ", "").ToLower() + codigoUnico + livroCriacaoDto.ISBN + ".png";
 
-                string caminhoParaSalvarImagens = _caminhoServidor + "\\imagem\\";
-
-                if (!Directory.Exists(caminhoParaSalvarImagens))
-                {
-                    Directory.CreateDirectory(caminhoParaSalvarImagens);
-                }
-
-                using (var stream = System.IO.File.Create(caminhoParaSalvarImagens + nomeCaminhoImagem))
-                {
-                    foto.CopyToAsync(stream).Wait();
-                }
+                var nomeCaminhoImagem = GeraCaminhoArquivo(foto);
 
                 //var livro = new LivrosModel
                 //{
@@ -99,6 +88,50 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
         }
 
+        public async Task<LivrosModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto)
+        {
+            try
+            {
+                var livro = await _context.Livros.AsNoTracking().FirstOrDefaultAsync(l => l.Id == livroEdicaoDto.Id);
+
+                var nomeCaminhoImagem = "";
+                if(foto != null)
+                {
+                    string caminhaCapaExistente = _caminhoServidor + "\\Imagem\\" + livro.Capa;
+
+                    if(File.Exists(caminhaCapaExistente)) {
+                        File.Delete(caminhaCapaExistente);
+                    }
+
+                    nomeCaminhoImagem = GeraCaminhoArquivo(foto);
+
+                }
+
+                var livroModel = _mapper.Map<LivrosModel>(livroEdicaoDto);
+
+                if(nomeCaminhoImagem != "")
+                {
+                    livroModel.Capa = nomeCaminhoImagem;
+                }else
+                {
+                    livroModel.Capa = livro.Capa;
+                }
+
+                livroModel.DataDeAlteracao = DateTime.Now;
+
+
+                _context.Update(livroModel);
+                await _context.SaveChangesAsync();
+
+                return livroModel;
+
+
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public bool VerificaSeJaExisteCadastro(LivroCriacaoDto livroCriacaoDto)
         {
             try
@@ -117,6 +150,26 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
                 throw new Exception(ex.Message);
 
             }
+        }
+
+
+        public string GeraCaminhoArquivo(IFormFile foto)
+        {
+            var codigoUnico = Guid.NewGuid().ToString();
+            var nomeCaminhoImagem = foto.FileName.Replace(" ", "").ToLower() + codigoUnico  + ".png";
+
+            string caminhoParaSalvarImagens = _caminhoServidor + "\\imagem\\";
+
+            if (!Directory.Exists(caminhoParaSalvarImagens))
+            {
+                Directory.CreateDirectory(caminhoParaSalvarImagens);
+            }
+
+            using (var stream = System.IO.File.Create(caminhoParaSalvarImagens + nomeCaminhoImagem))
+            {
+                foto.CopyToAsync(stream).Wait();
+            }
+            return nomeCaminhoImagem;
         }
     }
 }

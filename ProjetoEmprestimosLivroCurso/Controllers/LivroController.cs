@@ -54,7 +54,7 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         }
 
 
-
+        
 
 
         [HttpPost]
@@ -96,7 +96,23 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
 
         }
 
-
+        [HttpPost]
+        public async Task<ActionResult> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile? foto)
+        {
+            if (ModelState.IsValid)
+            {
+  
+                    var livro = await _livroInterface.Editar(livroEdicaoDto, foto);
+                    return RedirectToAction("Index");
+  
+                
+            }
+            else
+            {
+                TempData["MensagemErro"] = "Verifique os dados preenchidos!";
+                return View(livroEdicaoDto);
+            }
+        }
 
     }
 }
