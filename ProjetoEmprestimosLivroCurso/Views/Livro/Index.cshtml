@@ -65,7 +65,7 @@
                             <td><i class="bi bi-envelope-at"></i>@livro.QuantidadeEmEstoque</td>
                             <td><i class="bi bi-calendar"></i>@livro.DataDeCadastro</td>
                             <td>
-                                <a class="btn btn-warning"><i class="bi bi-file-earmark-zip"></i>Detalhes</a>
+                                <a class="btn btn-warning" asp-action="Detalhes" asp-controller="Livro" asp-route-id="@livro.Id"><i class="bi bi-file-earmark-zip"></i>Detalhes</a>
                                 <a class="btn btn-info"><i class="bi bi-pencil"></i>Editar</a>
                             </td>
                         </tr>

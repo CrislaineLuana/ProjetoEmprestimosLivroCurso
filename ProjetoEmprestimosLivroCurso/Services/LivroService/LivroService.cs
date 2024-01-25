@@ -33,6 +33,23 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
         }
 
+        public async Task<LivrosModel> BuscarLivroPorId(int? id)
+        {
+            try
+            {
+
+                var livro = await _context.Livros.FirstOrDefaultAsync(l => l.Id == id);
+
+                return livro;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<LivrosModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto)
         {
             try
