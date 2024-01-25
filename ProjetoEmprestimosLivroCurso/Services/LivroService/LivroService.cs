@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using ProjetoEmprestimosLivroCurso.Data;
 using ProjetoEmprestimosLivroCurso.Dto;
 using ProjetoEmprestimosLivroCurso.Models;
@@ -8,10 +9,12 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
     public class LivroService : ILivroInterface
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
         private string _caminhoServidor;
-        public LivroService(AppDbContext context, IWebHostEnvironment sistema)
+        public LivroService(AppDbContext context, IWebHostEnvironment sistema, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
             _caminhoServidor = sistema.WebRootPath;
         }
 
@@ -49,19 +52,21 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
                     foto.CopyToAsync(stream).Wait();
                 }
 
-                var livro = new LivrosModel
-                {
-                    Titulo = livroCriacaoDto.Titulo,
-                    Descricao = livroCriacaoDto.Descricao,
-                    Autor = livroCriacaoDto.Autor,
-                    Genero = livroCriacaoDto.Genero,
-                    QuantidadeEmEstoque = livroCriacaoDto.QuantidadeEmEstoque,
-                    AnoPublicacao = livroCriacaoDto.AnoPublicacao,
-                    Capa = nomeCaminhoImagem,
-                    ISBN = livroCriacaoDto.ISBN
+                //var livro = new LivrosModel
+                //{
+                //    Titulo = livroCriacaoDto.Titulo,
+                //    Descricao = livroCriacaoDto.Descricao,
+                //    Autor = livroCriacaoDto.Autor,
+                //    Genero = livroCriacaoDto.Genero,
+                //    QuantidadeEmEstoque = livroCriacaoDto.QuantidadeEmEstoque,
+                //    AnoPublicacao = livroCriacaoDto.AnoPublicacao,
+                //    Capa = nomeCaminhoImagem,
+                //    ISBN = livroCriacaoDto.ISBN
 
-                };
+                //};
 
+                var livro = _mapper.Map<LivrosModel>(livroCriacaoDto);
+                livro.Capa = nomeCaminhoImagem;
 
                 _context.Add(livro);
                 await _context.SaveChangesAsync();
