@@ -2,7 +2,7 @@
 
 namespace ProjetoEmprestimosLivroCurso.Models
 {
-    public class LivrosModel
+    public class LivroModel
     {
         [Key]
         public int Id { get; set; }

@@ -5,11 +5,11 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
 {
     public interface ILivroInterface
     {
-        Task<List<LivrosModel>> BuscarLivros();
-        Task<LivrosModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto);
+        Task<List<LivroModel>> BuscarLivros();
+        Task<LivroModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto);
         bool VerificaSeJaExisteCadastro(LivroCriacaoDto livroCriacaoDto);
-        Task<LivrosModel> BuscarLivroPorId(int? id);
-        Task<LivrosModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto);
+        Task<LivroModel> BuscarLivroPorId(int? id);
+        Task<LivroModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto);
 
     }
 }

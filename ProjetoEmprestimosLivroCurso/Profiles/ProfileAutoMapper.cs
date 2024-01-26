@@ -10,9 +10,9 @@ namespace ProjetoEmprestimosLivroCurso.Profiles
         public ProfileAutoMapper()
         {
 
-            CreateMap<LivroCriacaoDto, LivrosModel>();
-            CreateMap<LivrosModel, LivroEdicaoDto>();
-            CreateMap<LivroEdicaoDto,LivrosModel >();
+            CreateMap<LivroCriacaoDto, LivroModel>();
+            CreateMap<LivroModel, LivroEdicaoDto>();
+            CreateMap<LivroEdicaoDto,LivroModel >();
         }
     }
 }

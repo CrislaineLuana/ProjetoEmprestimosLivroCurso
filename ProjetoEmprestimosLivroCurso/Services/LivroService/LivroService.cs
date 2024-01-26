@@ -18,7 +18,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             _caminhoServidor = sistema.WebRootPath;
         }
 
-        public async Task<LivrosModel> BuscarLivroPorId(int? id)
+        public async Task<LivroModel> BuscarLivroPorId(int? id)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
         }
 
-        public async Task<List<LivrosModel>> BuscarLivros()
+        public async Task<List<LivroModel>> BuscarLivros()
         {
             try
             {
@@ -52,7 +52,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
         }
 
 
-        public async Task<LivrosModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto)
+        public async Task<LivroModel> Cadastrar(LivroCriacaoDto livroCriacaoDto, IFormFile foto)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
 
                 //};
 
-                var livro = _mapper.Map<LivrosModel>(livroCriacaoDto);
+                var livro = _mapper.Map<LivroModel>(livroCriacaoDto);
                 livro.Capa = nomeCaminhoImagem;
 
                 _context.Add(livro);
@@ -88,7 +88,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
         }
 
-        public async Task<LivrosModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto)
+        public async Task<LivroModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
 
                 }
 
-                var livroModel = _mapper.Map<LivrosModel>(livroEdicaoDto);
+                var livroModel = _mapper.Map<LivroModel>(livroEdicaoDto);
 
                 if(nomeCaminhoImagem != "")
                 {
