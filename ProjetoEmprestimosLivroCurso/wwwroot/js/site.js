@@ -3,7 +3,7 @@
 
 // Write your JavaScript code.
 $(document).ready(function () {
-    $('#livros').DataTable({
+    $('#registros').DataTable({
         "ordering": true,
         "paging": true,
         "searching": true,
