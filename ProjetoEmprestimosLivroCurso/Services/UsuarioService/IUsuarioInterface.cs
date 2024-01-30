@@ -8,6 +8,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
         Task<List<UsuarioModel>> BuscarUsuarios(int? id);
         Task<bool> VerificaSeExisteUsuarioEEmail(UsuarioCriacaoDto usuarioCriacaoDto);
         Task<UsuarioCriacaoDto> Cadastrar(UsuarioCriacaoDto usuarioCriacaoDto);
+        Task<UsuarioModel> BuscarUsuarioPorId(int? id);
 
     }
 }

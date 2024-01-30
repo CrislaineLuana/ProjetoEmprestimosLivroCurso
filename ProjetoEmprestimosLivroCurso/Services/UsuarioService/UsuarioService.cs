@@ -17,6 +17,18 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
             _autenticacaoInterface = autenticacaoInterface;
         }
 
+        public async Task<UsuarioModel> BuscarUsuarioPorId(int? id)
+        {
+            try
+            {
+                var usuario = await _context.Usuarios.FirstOrDefaultAsync(usuarioBanco => usuarioBanco.Id == id);
+                return usuario;
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<List<UsuarioModel>> BuscarUsuarios(int? id)
         {
             try
