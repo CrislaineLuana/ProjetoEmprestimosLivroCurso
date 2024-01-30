@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
-using ProjetoEmprestimosLivroCurso.Dto;
+using ProjetoEmprestimosLivroCurso.Dto.Livro;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
 

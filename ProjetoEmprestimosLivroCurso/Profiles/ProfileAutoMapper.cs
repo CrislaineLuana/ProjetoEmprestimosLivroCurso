@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ProjetoEmprestimosLivroCurso.Dto;
+using ProjetoEmprestimosLivroCurso.Dto.Livro;
 using ProjetoEmprestimosLivroCurso.Models;
 
 namespace ProjetoEmprestimosLivroCurso.Profiles

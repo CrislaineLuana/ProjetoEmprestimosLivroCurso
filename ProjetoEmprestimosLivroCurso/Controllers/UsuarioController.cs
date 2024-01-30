@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetoEmprestimosLivroCurso.Enums;
 using ProjetoEmprestimosLivroCurso.Services.UsuarioService;
 
 namespace ProjetoEmprestimosLivroCurso.Controllers
@@ -15,6 +16,25 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         {
             var usuarios = await _usuarioInterface.BuscarUsuarios(id);
             return View(usuarios);
+        }
+
+        [HttpGet]
+        public ActionResult Cadastrar(int? id)
+        {
+            //  UsuarioRegisterDto usuarioRegisterDto = new UsuarioRegisterDto();
+
+            ViewBag.Perfil = PerfilEnum.Administrador;
+
+            if (id != null)
+            {
+                //usuarioRegisterDto = new UsuarioRegisterDto();
+
+                ViewBag.Perfil = PerfilEnum.Cliente;
+            }
+
+
+
+            return View();
         }
     }
 }

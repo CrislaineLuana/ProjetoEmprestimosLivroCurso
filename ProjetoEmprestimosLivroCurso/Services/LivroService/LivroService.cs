@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ProjetoEmprestimosLivroCurso.Data;
-using ProjetoEmprestimosLivroCurso.Dto;
+using ProjetoEmprestimosLivroCurso.Dto.Livro;
 using ProjetoEmprestimosLivroCurso.Models;
 
 namespace ProjetoEmprestimosLivroCurso.Services.LivroService
