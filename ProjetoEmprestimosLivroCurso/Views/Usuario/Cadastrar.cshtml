@@ -76,14 +76,14 @@
 
             <div class="mb-1 col-6">
                 <label>CEP:</label>
-                <input type="text" asp-for="CEP" class="form-control shadow-none" />
+                <input type="text" asp-for="CEP" class="form-control shadow-none" id="input-cep" />
                 <span class="text-danger" asp-validation-for="CEP"></span>
             </div>
 
 
             <div class="mb-1 col-6">
                 <label>Estado:</label>
-                <input type="text" asp-for="Estado" class="form-control shadow-none" />
+                <input type="text" asp-for="Estado" class="form-control shadow-none" id="input-estado" />
                 <span class="text-danger" asp-validation-for="Estado"></span>
             </div>
         </div>
@@ -92,7 +92,7 @@
 
             <div class="mb-1 col-8">
                 <label>Logradouro:</label>
-                <input type="text" asp-for="Logradouro" class="form-control shadow-none" />
+                <input type="text" asp-for="Logradouro" class="form-control shadow-none" id="input-logradouro" />
                 <span class="text-danger" asp-validation-for="Logradouro"></span>
             </div>
 
@@ -109,14 +109,14 @@
 
             <div class="mb-1 col-6">
                 <label>Bairro:</label>
-                <input type="text" asp-for="Bairro" class="form-control shadow-none" />
+                <input type="text" asp-for="Bairro" class="form-control shadow-none" id="input-bairro" />
                 <span class="text-danger" asp-validation-for="Bairro"></span>
             </div>
 
 
             <div class="mb-1 col-6">
                 <label>Complemento:</label>
-                <input type="text" asp-for="Complemento" class="form-control shadow-none" />
+                <input type="text" asp-for="Complemento" class="form-control shadow-none" id="input-complemento" />
                 <span class="text-danger" asp-validation-for="Complemento"></span>
             </div>
         </div>
@@ -149,3 +149,31 @@
         </div>
     </form>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+<script>
+
+    var inputLogradouro = document.querySelector("#input-logradouro");
+    var inputBairro = document.querySelector("#input-bairro");
+    var inputEstado = document.querySelector("#input-estado");
+    var inputComplemento = document.querySelector("#input-complemento");
+
+    $('#input-cep').focusout(async function (e) {
+        var target = e.target;
+
+        var value = target.value;
+
+        var url = `https://viacep.com.br/ws/${value}/json/`;
+
+        var resposta = await fetch(url);
+        var dados = await resposta.json();
+
+        inputLogradouro.value = dados.logradouro;
+        inputBairro.value = dados.bairro;
+        inputEstado.value = dados.uf;
+        inputComplemento.value = dados.complemento;
+    });
+
+
+</script>
