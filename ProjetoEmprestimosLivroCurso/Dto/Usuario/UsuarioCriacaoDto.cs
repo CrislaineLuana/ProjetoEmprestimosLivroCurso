@@ -14,7 +14,7 @@ namespace ProjetoEmprestimosLivroCurso.Dto.Usuario
         public string Email { get; set; } 
 
         [Required(ErrorMessage = "Selecione o cargo!")]
-        public PerfilEnum Cargo { get; set; }
+        public PerfilEnum Perfil { get; set; }
         [Required(ErrorMessage = "Selecione o turno!")]
         public TurnoEnum Turno { get; set; }
         [Required(ErrorMessage = "Digite o logradouro!")]
