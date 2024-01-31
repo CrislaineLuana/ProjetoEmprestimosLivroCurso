@@ -21,7 +21,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
         {
             try
             {
-                var usuario = await _context.Usuarios.FirstOrDefaultAsync(usuarioBanco => usuarioBanco.Id == id);
+                var usuario = await _context.Usuarios.Include(e => e.Endereco).FirstOrDefaultAsync(usuarioBanco => usuarioBanco.Id == id);
                 return usuario;
             }catch (Exception ex)
             {
