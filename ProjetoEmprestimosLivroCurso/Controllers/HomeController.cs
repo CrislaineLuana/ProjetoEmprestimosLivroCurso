@@ -12,7 +12,9 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         {
             _sessaoInterface = sessaoInterface;
         }
-        public IActionResult Index()
+
+        [HttpGet]
+        public ActionResult Index()
         {
 
             var usuarioSessao = _sessaoInterface.BuscarSessao();
@@ -28,8 +30,17 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             return View();
         }
 
-       
 
+        [HttpGet]
+        public ActionResult Login()
+        {
+            if(_sessaoInterface.BuscarSessao() != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
+        }
         
     }
 }

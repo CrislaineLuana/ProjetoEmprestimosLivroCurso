@@ -29,6 +29,7 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         {
             ViewBag.Perfil = PerfilEnum.Administrador;
 
+
             if (id != null)
             {      
                 ViewBag.Perfil = PerfilEnum.Cliente;
@@ -103,7 +104,6 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                 {
                     return RedirectToAction("Index", "Funcionario");
                 }
-
                 return RedirectToAction("Index", "Cliente", new { Id = "0" });
 
 
