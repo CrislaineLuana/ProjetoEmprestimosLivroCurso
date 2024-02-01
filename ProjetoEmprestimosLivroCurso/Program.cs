@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjetoEmprestimosLivroCurso.Data;
 using ProjetoEmprestimosLivroCurso.Services.Autenticacao;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
+using ProjetoEmprestimosLivroCurso.Services.SessaoService;
 using ProjetoEmprestimosLivroCurso.Services.UsuarioService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,11 +15,23 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped< ILivroInterface, LivroService  >();
 builder.Services.AddScoped<IUsuarioInterface, UsuarioService>();
 builder.Services.AddScoped<IAutenticacaoInterface, AutenticacaoService>();
+builder.Services.AddScoped<ISessaoInterface, SessaoService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
+
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+
+
 
 var app = builder.Build();
 
@@ -36,6 +49,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();       
 
 app.MapControllerRoute(
     name: "default",
