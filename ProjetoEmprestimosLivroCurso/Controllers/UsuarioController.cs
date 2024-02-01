@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using ProjetoEmprestimosLivroCurso.Dto.Endereco;
 using ProjetoEmprestimosLivroCurso.Dto.Usuario;
 using ProjetoEmprestimosLivroCurso.Enums;
 using ProjetoEmprestimosLivroCurso.Models;
@@ -9,9 +11,11 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioInterface _usuarioInterface;
-        public UsuarioController(IUsuarioInterface usuarioInterface)
+        private readonly IMapper _mapper;
+        public UsuarioController(IUsuarioInterface usuarioInterface, IMapper mapper )
         {
             _usuarioInterface = usuarioInterface;
+            _mapper = mapper;
         }
 
         public async Task<ActionResult> Index(int? id)
@@ -44,6 +48,39 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             return RedirectToAction("Index");
         }
 
+
+        [HttpGet]
+        public async Task<ActionResult> Editar(int? id)
+        {
+            if(id != null)
+            {
+                var usuario = await _usuarioInterface.BuscarUsuarioPorId(id);
+
+                var usuarioEditado = new UsuarioEditarDto
+                {
+                    NomeCompleto = usuario.NomeCompleto,
+                    Email = usuario.Email,
+                    Perfil = usuario.Perfil,
+                    Turno = usuario.Turno,
+                    Id = usuario.Id,
+                    Usuario = usuario.Usuario,
+                    Endereco = _mapper.Map<EnderecoEditarDto>(usuario.Endereco)
+                };
+
+                if (usuarioEditado.Perfil == PerfilEnum.Cliente)
+                {
+                    ViewBag.Perfil = PerfilEnum.Cliente;
+                }
+                else
+                {
+                    ViewBag.Perfil = PerfilEnum.Administrador;
+                }
+
+                return View(usuarioEditado);
+            }
+
+            return RedirectToAction("Index");
+        }
 
         [HttpPost]
         public async Task<ActionResult> Cadastrar(UsuarioCriacaoDto usuarioCriacaoDto)
