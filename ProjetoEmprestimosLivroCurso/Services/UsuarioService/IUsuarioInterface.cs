@@ -10,5 +10,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
         Task<UsuarioCriacaoDto> Cadastrar(UsuarioCriacaoDto usuarioCriacaoDto);
         Task<UsuarioModel> BuscarUsuarioPorId(int? id);
 
+        Task<UsuarioModel> MudarSituacaoUsuario(int id);
+
     }
 }

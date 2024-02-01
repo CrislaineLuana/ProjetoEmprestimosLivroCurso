@@ -96,6 +96,41 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
             }
         }
 
+        public async Task<UsuarioModel> MudarSituacaoUsuario(int id)
+        {
+            try
+            {
+                var usuarioMudarSituacao = await _context.Usuarios.FirstOrDefaultAsync(usuarioBanco => usuarioBanco.Id == id);
+
+                if(usuarioMudarSituacao != null)
+                {
+                    if(usuarioMudarSituacao.Situacao == true)
+                    {
+                        usuarioMudarSituacao.Situacao = false;
+                        usuarioMudarSituacao.DataAlteracao = DateTime.Now;
+                    }
+                    else
+                    {
+                        usuarioMudarSituacao.Situacao = true;
+                        usuarioMudarSituacao.DataAlteracao = DateTime.Now;
+                    }
+
+                    _context.Update(usuarioMudarSituacao);
+                    await _context.SaveChangesAsync();
+
+                    return usuarioMudarSituacao;
+                }
+
+                return usuarioMudarSituacao;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<bool> VerificaSeExisteUsuarioEEmail(UsuarioCriacaoDto usuarioCriacaoDto)
         {
             try

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoEmprestimosLivroCurso.Dto.Usuario;
 using ProjetoEmprestimosLivroCurso.Enums;
+using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.UsuarioService;
 
 namespace ProjetoEmprestimosLivroCurso.Controllers
@@ -78,7 +79,40 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<ActionResult> MudarSituacaoUsuario(UsuarioModel usuario)
+        {
+            if (usuario.Id != 0 && usuario.Id != null)
+            {
+                var usuarioBanco = await _usuarioInterface.MudarSituacaoUsuario(usuario.Id);
 
+               
+
+                    if(usuarioBanco.Situacao == true)
+                    {
+                        TempData["MensagemSucesso"] = "Usuário ativo com sucesso!";
+                    }
+                    else
+                    {
+                        TempData["MensagemSucesso"] = "Inativação realizada com sucesso!";
+                    }
+
+                    if(usuarioBanco.Perfil != PerfilEnum.Cliente)
+                    {
+                        return RedirectToAction("Index", "Funcionario");
+                    }else
+                    {
+                        return RedirectToAction("Index", "Cliente", new {Id = "0"});
+                    }
+                
+               
+               
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
     }
 }
