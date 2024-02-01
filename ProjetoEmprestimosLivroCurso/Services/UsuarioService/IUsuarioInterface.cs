@@ -11,6 +11,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.UsuarioService
         Task<UsuarioModel> BuscarUsuarioPorId(int? id);
 
         Task<UsuarioModel> MudarSituacaoUsuario(int id);
+        Task<UsuarioModel> Editar(UsuarioEditarDto usuarioEditarDto);
 
     }
 }

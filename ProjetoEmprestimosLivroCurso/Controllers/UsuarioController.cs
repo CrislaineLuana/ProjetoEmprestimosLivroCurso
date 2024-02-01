@@ -151,5 +151,28 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<ActionResult> Editar(UsuarioEditarDto usuarioEditarDto)
+        {
+            if (ModelState.IsValid)
+            {
+                var usuario = await _usuarioInterface.Editar(usuarioEditarDto);
+                TempData["MensagemSucesso"] = "Edição realizada com sucesso!";
+
+                if(usuario.Perfil != PerfilEnum.Cliente)
+                {
+                    return RedirectToAction("Index", "Funcionario");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Cliente", new {Id = "0"});
+                }
+            }
+            else
+            {
+                TempData["MensagemErro"] = "Verifique os dados informados!";
+                return View(usuarioEditarDto);
+            }
+        }
     }
 }

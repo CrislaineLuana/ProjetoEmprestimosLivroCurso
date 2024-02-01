@@ -15,6 +15,7 @@ namespace ProjetoEmprestimosLivroCurso.Profiles
             CreateMap<LivroModel, LivroEdicaoDto>();
             CreateMap<LivroEdicaoDto,LivroModel >();
             CreateMap<EnderecoModel, EnderecoEditarDto>();
+            CreateMap<EnderecoEditarDto, EnderecoModel>();
         }
     }
 }
