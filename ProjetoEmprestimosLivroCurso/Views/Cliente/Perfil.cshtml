@@ -1,0 +1,182 @@
+﻿@using ProjetoEmprestimosLivroCurso.Models
+@model IEnumerable<EmprestimoModel>
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div class="alert alert-success text-dark" role="alert">
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger text-dark" role="alert">
+        @TempData["MensagemErro"]
+    </div>
+}
+
+<div class="py-5" >
+    <div class="container">
+
+        <div class="text-center mb-5">
+            <form method="get" asp-action="Perfil" asp-controller="Cliente" class="d-flex justify-content-center align-items-center mt-5" style="height:40px">
+                <input name="pesquisar" class="form-control mx-2" style="border: 1px solid black; border-radius:10px; width:450px" />
+                <div class="form-check">
+                       <fieldset>
+                           <div class="form-check">
+                               <input class="form-check-input"  type="radio" name="filtro" id="optionsRadios1" value="NDevolvidos" checked/>
+                                <label class="form-check-label" for="optionsRadios1"> Não Devolvidos </label>
+                           </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="filtro" id="optionsRadios2" value="Devolvidos"  />
+                            <label class="form-check-label" for="optionsRadios2"> Devolvidos </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="filtro" id="optionsRadios3" value="Todos"  />
+                            <label class="form-check-label" for="optionsRadios3"> Todos </label>
+                        </div>
+
+
+                       </fieldset>
+                </div>
+                <button type="submit" class="btn btn-primary w-10" style="border-radius:10px">Pesquisar</button>
+
+            </form>
+        </div>
+
+        @if(ViewBag.Filtro == "NDevolvidos")
+        {
+            <h1 class="text-center mb-3">Livros não devolvidos!</h1>
+        }
+
+        @if (ViewBag.Filtro == "Devolvidos")
+        {
+            <h1 class="text-center mb-3">Livros devolvidos!</h1>
+        }
+
+        @if (ViewBag.Filtro == "Todos")
+        {
+            <h1 class="text-center mb-3">Todos os livros já emprestados!</h1>
+        }
+
+
+        <div class="row row-cols-1 row-cols-sm-2  row-cols-md-3 g-0">
+
+            @if(Model.Count() > 0)
+            {
+
+                @foreach (var emprestimo in Model)
+                {
+
+                    @if (ViewBag.Filtro == "NDevolvidos")
+                    {
+
+                        @if (Model.Where(emprestimo => emprestimo.DataDevolucao == null).ToList().Count() > 0)
+                        {
+
+
+                            <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
+                                <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px"/>
+                                <div class="card-body">
+                                    <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
+                                    <p class="card-text">@emprestimo.Livro.Autor</p>
+                                    <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
+                                    <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
+
+                                    @if (emprestimo.DataDevolucao == null)
+                                    {
+                                        <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
+
+                                    }
+                                </div>
+
+                            </div>
+
+
+
+                        } 
+                     }
+
+                    @if (ViewBag.Filtro == "Devolvidos")
+                    {
+
+                        @if (Model.Where(emprestimo => emprestimo.DataDevolucao != null).ToList().Count() > 0)
+                        {
+
+
+                            <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
+                                <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
+                                    <p class="card-text">@emprestimo.Livro.Autor</p>
+                                    <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
+                                    <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
+
+                                    @if (emprestimo.DataDevolucao == null)
+                                    {
+                                        <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
+
+                                    }
+                                </div>
+
+                            </div>
+
+
+
+                        }
+
+                     }
+
+                    @if (ViewBag.Filtro == "Todos")
+                    {
+
+                        <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
+                            <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px" />
+                            <div class="card-body">
+                                <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
+                                <p class="card-text">@emprestimo.Livro.Autor</p>
+                                <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
+                                <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
+
+                                @if (emprestimo.DataDevolucao == null)
+                                {
+                                    <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
+
+                                }
+                            </div>
+
+                        </div>
+
+
+                    }
+
+
+
+
+                }
+
+            }
+            else
+            {
+                <p class="text-center">Nenhum registro localizado!</p>
+            }
+
+        </div>
+
+
+
+
+    </div>
+</div>

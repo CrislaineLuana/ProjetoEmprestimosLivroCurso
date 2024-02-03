@@ -91,7 +91,8 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
                 && emprestimo.Livro.Titulo.Contains(pesquisar)
                 && emprestimo.Livro.Autor.Contains(pesquisar)).ToListAsync();
 
-                return emprestimosFiltro;
+
+                    return emprestimosFiltro;
             }
             catch (Exception ex)
             {
