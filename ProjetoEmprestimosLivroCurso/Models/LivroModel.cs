@@ -20,6 +20,7 @@ namespace ProjetoEmprestimosLivroCurso.Models
         public string Genero { get; set; } = string.Empty;
         [Required]
         public int AnoPublicacao { get; set; }
+        public List<EmprestimoModel> Emprestimos { get; set; }
         [Required]
         public int QuantidadeEmEstoque { get; set; }
         public DateTime DataDeCadastro { get; set; } = DateTime.Now;

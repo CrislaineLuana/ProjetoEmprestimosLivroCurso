@@ -185,5 +185,59 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
                 throw new Exception(ex.Message);  
             }
         }
+
+        public async Task<EmprestimoModel> BuscarLivroPorId(int? id, UsuarioModel usuarioSessao)
+        {
+            try
+            {
+                //Usuario deslogado
+                if(usuarioSessao == null)
+                {
+                    var emprestimoSemUsuario = await _context.Emprestimos.Include(livro => livro.Livro).FirstOrDefaultAsync(emprestimo => emprestimo.LivroId == id);
+
+                    if(emprestimoSemUsuario == null)
+                    {
+                        var livro = await BuscarLivroPorId(id);
+
+                        var emprestimoBanco = new EmprestimoModel
+                        {
+                            Livro = livro,
+                            Usuario = null
+                        };
+
+                        return emprestimoBanco;
+                    }
+                    return emprestimoSemUsuario;
+                }
+
+                var emprestimo = await _context.Emprestimos
+                        .Include(livro => livro.Livro)
+                        .Include(usuario => usuario.Usuario)
+                        .FirstOrDefaultAsync(emprestimo => emprestimo.LivroId == id && emprestimo.DataDevolucao == null && emprestimo.Usuario.Id == usuarioSessao.Id);
+
+
+                if(emprestimo == null )
+                {
+                    var livro = await BuscarLivroPorId(id);
+
+                    var emprestimoBanco = new EmprestimoModel
+                    {
+                        Livro = livro,
+                        Usuario = usuarioSessao
+                    };
+
+                    return emprestimoBanco;
+                }
+
+                return emprestimo;
+
+
+
+
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

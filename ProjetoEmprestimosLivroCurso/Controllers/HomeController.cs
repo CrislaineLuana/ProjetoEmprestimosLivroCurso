@@ -66,7 +66,39 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             return RedirectToAction("Login", "Home");
         }
 
-      
+
+        [HttpGet]
+        public  async Task<ActionResult> Detalhes(int? id)
+        {
+            var usuarioSessao = _sessaoInterface.BuscarSessao();
+
+            if(usuarioSessao != null)
+            {
+                ViewBag.UsuarioLogado = usuarioSessao.Id;
+                ViewBag.LayoutPagina = "_Layout";
+            }
+            else
+            {
+                ViewBag.LayoutPagina = "_LayoutDeslogada";
+            }
+
+
+            var livro = await _livroInterface.BuscarLivroPorId(id, usuarioSessao);
+
+
+            if(livro.Usuario != null)
+            {
+                if(livro.Usuario.Emprestimos == null)
+                {
+                    ViewBag.Emprestimos = "SemEmprestimos";
+                }
+
+            }
+
+            return View(livro);
+
+        }
+
         [HttpPost]
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
