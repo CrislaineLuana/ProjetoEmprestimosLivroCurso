@@ -41,5 +41,22 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        [HttpGet]
+        public async Task<ActionResult> Devolver(int id)
+        {
+            var sessaoUsuario = _sessaoInterface.BuscarSessao();
+            if (sessaoUsuario == null)
+            {
+                TempData["MensagemErro"] = "É necessário estar logado para emprestar livros!";
+                return RedirectToAction("Login", "Home");
+            }
+
+            var emprestimo = await _emprestimoInterface.Devolver(id);
+
+            TempData["MensagemSucesso"] = "Devolução realizada com sucesso!";
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

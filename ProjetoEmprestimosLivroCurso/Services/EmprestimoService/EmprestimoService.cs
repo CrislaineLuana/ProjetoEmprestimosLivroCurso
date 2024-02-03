@@ -86,10 +86,10 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
 
             try
             {
-                var emprestimosFiltro = await _context.Emprestimos.Include(usuario => usuario.Usuario)
+                var emprestimosFiltro = await _context.Emprestimos.Include(usuario => usuario.Usuario).Include(livro => livro.Livro)
             .Where(emprestimo => emprestimo.UsuarioId == usuarioSessao.Id
                 && emprestimo.Livro.Titulo.Contains(pesquisar)
-                && emprestimo.Livro.Autor.Contains(pesquisar)).ToListAsync();
+                || emprestimo.Livro.Autor.Contains(pesquisar)).ToListAsync();
 
 
                     return emprestimosFiltro;
@@ -119,6 +119,36 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
             {
                 throw new Exception(ex.Message);
             }
+        }
+
+        public async Task<EmprestimoModel> Devolver(int id)
+        {
+            try
+            {
+
+                var emprestimo = await _context.Emprestimos.Include(livro => livro.Livro).FirstOrDefaultAsync(emprestimo => emprestimo.Id == id);
+
+                if(emprestimo == null)
+                {
+                    throw new Exception("Empréstimo não localizado!");
+                }
+
+                emprestimo.DataDevolucao = DateTime.Now;
+
+                _context.Update(emprestimo);
+                await _context.SaveChangesAsync();
+
+                var livroEstoque = await RetornarEstoque(emprestimo.Livro);
+
+                return emprestimo;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

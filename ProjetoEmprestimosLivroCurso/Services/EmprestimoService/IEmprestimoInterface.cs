@@ -7,5 +7,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
         Task<RespostaModel<EmprestimoModel>> Emprestar(int livroId);
         Task<List<EmprestimoModel>> BuscarEmprestimosFiltro(UsuarioModel usuarioSessao, string pesquisar);
         Task<List<EmprestimoModel>> BuscarEmprestimos(UsuarioModel usuarioSessao);
+
+        Task<EmprestimoModel> Devolver(int id);
     }
 }

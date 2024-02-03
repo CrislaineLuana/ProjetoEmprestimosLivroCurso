@@ -74,27 +74,31 @@
                         @if (Model.Where(emprestimo => emprestimo.DataDevolucao == null).ToList().Count() > 0)
                         {
 
+                            @if(emprestimo.DataDevolucao == null)
+                            {
+                                <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
+                                    <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
+                                        <p class="card-text">@emprestimo.Livro.Autor</p>
+                                        <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
+                                        <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
 
-                            <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
-                                <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px"/>
-                                <div class="card-body">
-                                    <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
-                                    <p class="card-text">@emprestimo.Livro.Autor</p>
-                                    <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
-                                    <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
+                                        @if (emprestimo.DataDevolucao == null)
+                                        {
+                                            <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
 
-                                    @if (emprestimo.DataDevolucao == null)
-                                    {
-                                        <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
+                                        }
+                                    </div>
 
-                                    }
                                 </div>
+                            }
 
-                            </div>
+                            
 
 
 
@@ -106,28 +110,31 @@
 
                         @if (Model.Where(emprestimo => emprestimo.DataDevolucao != null).ToList().Count() > 0)
                         {
+                            @if(emprestimo.DataDevolucao != null)
+                            {
+                                <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
+                                    <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px" />
+                                    <div class="card-body">
+                                        <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
+                                        <p class="card-text">@emprestimo.Livro.Autor</p>
+                                        <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
+                                        <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
 
+                                        @if (emprestimo.DataDevolucao == null)
+                                        {
+                                            <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
 
-                            <div class="card" style="width: 18rem; margin-left: 20px; margin-bottom:20px">
-                                <img src="/Imagem/@emprestimo.Livro.Capa" class="card-img-top" style="width:178px; height:250px" />
-                                <div class="card-body">
-                                    <h5 class="card-title">@emprestimo.Livro.Titulo</h5>
-                                    <p class="card-text">@emprestimo.Livro.Autor</p>
-                                    <p class="card-text">Data empréstimo: @emprestimo.DataEmprestimo</p>
-                                    <p class="card-text">Data Devolução: @(emprestimo.DataDevolucao == null ? "Não devolvido" : emprestimo.DataDevolucao)</p>
+                                        }
+                                    </div>
 
-                                    @if (emprestimo.DataDevolucao == null)
-                                    {
-                                        <a class="btn btn-danger w-100" style="font-size: 16px" asp-action="Devolver" asp-controller="Emprestimo" asp-route-id="@emprestimo.Id">Devolver</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="btn btn-success w-100" style="font-size: 16px">DEVOLVIDO</a>
-
-                                    }
                                 </div>
+                            }
 
-                            </div>
+                           
 
 
 
