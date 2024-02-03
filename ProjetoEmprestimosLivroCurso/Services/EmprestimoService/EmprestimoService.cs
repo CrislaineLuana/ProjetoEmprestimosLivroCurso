@@ -1,4 +1,5 @@
-﻿using ProjetoEmprestimosLivroCurso.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoEmprestimosLivroCurso.Data;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
 using ProjetoEmprestimosLivroCurso.Services.SessaoService;
@@ -80,7 +81,43 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
             return livro;
         }
 
+        public async Task<List<EmprestimoModel>> BuscarEmprestimosFiltro(UsuarioModel usuarioSessao, string pesquisar)
+        {
 
+            try
+            {
+                var emprestimosFiltro = await _context.Emprestimos.Include(usuario => usuario.Usuario)
+            .Where(emprestimo => emprestimo.UsuarioId == usuarioSessao.Id
+                && emprestimo.Livro.Titulo.Contains(pesquisar)
+                && emprestimo.Livro.Autor.Contains(pesquisar)).ToListAsync();
 
+                return emprestimosFiltro;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
+       
+        }
+
+        public async Task<List<EmprestimoModel>> BuscarEmprestimos(UsuarioModel usuarioSessao)
+        {
+            try
+            {
+
+                var usuarioEmprestimos = await _context.Emprestimos
+                                    .Where(emprestimo => emprestimo.UsuarioId == usuarioSessao.Id)
+                                    .Include(livro => livro.Livro)
+                                    .Include(usuario => usuario.Usuario).ToListAsync();
+
+                return usuarioEmprestimos;
+
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }
