@@ -46,6 +46,15 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult Sair()
+        {
+            _sessaoInterface.RemoverSessao();
+            TempData["MensagemSucesso"] = "Usuário deslogado!";
+            return RedirectToAction("Login", "Home");
+        }
+
+      
         [HttpPost]
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
