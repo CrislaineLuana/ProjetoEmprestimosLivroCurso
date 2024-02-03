@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProjetoEmprestimosLivroCurso.Dto.Home;
 using ProjetoEmprestimosLivroCurso.Services.HomeService;
+using ProjetoEmprestimosLivroCurso.Services.LivroService;
 using ProjetoEmprestimosLivroCurso.Services.SessaoService;
 using System.Diagnostics;
 
@@ -10,15 +11,17 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
     {
         private readonly ISessaoInterface _sessaoInterface;
         private readonly IHomeInterface _homeInterface;
+        private readonly ILivroInterface _livroInterface;
 
-        public HomeController(ISessaoInterface sessaoInterface, IHomeInterface homeInterface)
+        public HomeController(ISessaoInterface sessaoInterface, IHomeInterface homeInterface, ILivroInterface livroInterface)
         {
             _sessaoInterface = sessaoInterface;
             _homeInterface = homeInterface;
+            _livroInterface = livroInterface;
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string pesquisar = null)
         {
 
             var usuarioSessao = _sessaoInterface.BuscarSessao();
@@ -31,7 +34,16 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                 ViewBag.LayoutPagina = "_LayoutDeslogada";
             }
 
-            return View();
+            if(pesquisar == null)
+            {
+                var livrosBanco = await _livroInterface.BuscarLivros();
+                return View(livrosBanco);
+            }
+            else
+            {
+                var livrosBanco = await _livroInterface.BuscarLivrosFiltro(pesquisar);
+                return View(livrosBanco);
+            }
         }
 
 

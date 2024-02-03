@@ -10,6 +10,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
         bool VerificaSeJaExisteCadastro(LivroCriacaoDto livroCriacaoDto);
         Task<LivroModel> BuscarLivroPorId(int? id);
         Task<LivroModel> Editar(LivroEdicaoDto livroEdicaoDto, IFormFile foto);
+        Task<List<LivroModel>> BuscarLivrosFiltro(string pesquisar);
 
     }
 }

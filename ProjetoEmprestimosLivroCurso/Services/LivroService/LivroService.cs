@@ -171,5 +171,19 @@ namespace ProjetoEmprestimosLivroCurso.Services.LivroService
             }
             return nomeCaminhoImagem;
         }
+
+        public async Task<List<LivroModel>> BuscarLivrosFiltro(string pesquisar)
+        {
+            try
+            {
+
+                var livros = await _context.Livros.Where(livro => livro.Titulo.Contains(pesquisar) || livro.Autor.Contains(pesquisar)).ToListAsync();
+                return livros;
+
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);  
+            }
+        }
     }
 }
