@@ -43,6 +43,17 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
                     }
 
                 break;
+                case 2:
+
+                    var dadosCliente = JsonConvert.SerializeObject(dados);
+                    var dadosClientesModel = JsonConvert.DeserializeObject<List<UsuarioRelatorioDto>>(dadosCliente);
+                    if(dadosClientesModel != null)
+                    {
+                        return ExportarCliente(dataTable, dadosClientesModel);
+                    }
+
+                    break;
+              
             }
 
             return new DataTable();
@@ -56,6 +67,17 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
             foreach(var dado in dados)
             {
                 data.Rows.Add(dado.Id, dado.Titulo, dado.Descricao, dado.Capa, dado.ISBN, dado.Autor, dado.Genero, dado.AnoPublicacao, dado.QuantidadeEmEstoque, dado.DataDeCadastro, dado.DataDeAlteracao);
+            }
+
+            return data;
+        }
+
+
+        public DataTable ExportarCliente(DataTable data, List<UsuarioRelatorioDto> dados)
+        {
+            foreach (var dado in dados)
+            {
+                data.Rows.Add(dado.Id, dado.NomeCompleto, dado.Usuario, dado.Email, dado.Situacao == "True" ? "Ativo" : "Inativo", dado.Perfil, dado.Turno,dado.Logradouro, dado.Bairro, dado.Numero, dado.CEP, dado.Estado, dado.Complemento, dado.DataCadastro, dado.DataAlteracao);
             }
 
             return data;

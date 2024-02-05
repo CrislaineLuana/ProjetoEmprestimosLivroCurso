@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ClosedXML.Excel;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoEmprestimosLivroCurso.Dto.Relatorio;
 using ProjetoEmprestimosLivroCurso.Models;
@@ -53,6 +54,38 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                     List<LivroModel> livros = await _livroInterface.BuscarLivros();
                     List<LivroRelatorioDto> dadosLivros = _mapper.Map<List<LivroRelatorioDto>>(livros);
                     tabela = _relatorioInterface.ColetarDados(dadosLivros, id);
+                break;
+                case 2:
+                    List<UsuarioModel> clientes = await _usuarioInterface.BuscarUsuarios(0);
+                    List<UsuarioRelatorioDto> dadosClientes = new List<UsuarioRelatorioDto>();
+
+                    foreach (var cliente in  clientes)
+                    {
+                        dadosClientes.Add(
+                            new UsuarioRelatorioDto
+                            {
+                                Id = cliente.Id,
+                                NomeCompleto = cliente.NomeCompleto,
+                                Usuario = cliente.Usuario,
+                                Email = cliente.Email,
+                                Situacao = cliente.Situacao.ToString(),
+                                Perfil = cliente.Perfil.ToString(),
+                                Turno = cliente.Turno.ToString(),
+                                Logradouro = cliente.Endereco.Logradouro,
+                                Bairro = cliente.Endereco.Bairro,
+                                Numero = cliente.Endereco.Numero,
+                                CEP = cliente.Endereco.CEP,
+                                Estado = cliente.Endereco.Estado,
+                                Complemento = cliente.Endereco.Complemento,
+                                DataCadastro = cliente.DataCadastro,
+                                DataAlteracao = cliente.DataAlteracao
+                            }
+
+                     );
+                    }
+
+                    tabela = _relatorioInterface.ColetarDados(dadosClientes, id);
+
                 break;
             }
 

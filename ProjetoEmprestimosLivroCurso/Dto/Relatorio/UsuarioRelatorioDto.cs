@@ -15,7 +15,7 @@ namespace ProjetoEmprestimosLivroCurso.Dto.Relatorio
 
         public string Email { get; set; } = string.Empty;
 
-        public bool Situacao { get; set; } = true;
+        public string Situacao { get; set; }
       
         public string Perfil { get; set; }
 
