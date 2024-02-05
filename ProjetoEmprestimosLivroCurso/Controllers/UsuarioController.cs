@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetoEmprestimosLivroCurso.Dto.Endereco;
 using ProjetoEmprestimosLivroCurso.Dto.Usuario;
 using ProjetoEmprestimosLivroCurso.Enums;
+using ProjetoEmprestimosLivroCurso.Filtros;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.UsuarioService;
 
 namespace ProjetoEmprestimosLivroCurso.Controllers
 {
+ 
     public class UsuarioController : Controller
     {
         private readonly IUsuarioInterface _usuarioInterface;
@@ -17,7 +19,8 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             _usuarioInterface = usuarioInterface;
             _mapper = mapper;
         }
-
+        [UsuarioLogado]
+        [UsuarioLogadoCliente]
         public async Task<ActionResult> Index(int? id)
         {
             var usuarios = await _usuarioInterface.BuscarUsuarios(id);
@@ -38,6 +41,8 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         }
 
         [HttpGet]
+        [UsuarioLogado]
+        [UsuarioLogadoCliente]
         public async Task<ActionResult> Detalhes(int? id)
         {
             if(id != null)
@@ -51,6 +56,8 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
 
 
         [HttpGet]
+        [UsuarioLogado]
+        [UsuarioLogadoCliente]
         public async Task<ActionResult> Editar(int? id)
         {
             if(id != null)
@@ -117,6 +124,8 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
 
 
         [HttpPost]
+        [UsuarioLogado]
+        [UsuarioLogadoCliente]
         public async Task<ActionResult> MudarSituacaoUsuario(UsuarioModel usuario)
         {
             if (usuario.Id != 0 && usuario.Id != null)
@@ -152,6 +161,8 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         }
 
         [HttpPost]
+        [UsuarioLogado]
+        [UsuarioLogadoCliente]
         public async Task<ActionResult> Editar(UsuarioEditarDto usuarioEditarDto)
         {
             if (ModelState.IsValid)

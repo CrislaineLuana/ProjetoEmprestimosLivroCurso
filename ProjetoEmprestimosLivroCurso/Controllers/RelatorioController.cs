@@ -3,6 +3,7 @@ using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoEmprestimosLivroCurso.Dto.Relatorio;
+using ProjetoEmprestimosLivroCurso.Filtros;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.EmprestimoService;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
@@ -13,6 +14,9 @@ using System.Data;
 
 namespace ProjetoEmprestimosLivroCurso.Controllers
 {
+    
+    [UsuarioLogado]
+    [UsuarioLogadoCliente]
     public class RelatorioController : Controller
     {
         private readonly ISessaoInterface _sessaoInterface;

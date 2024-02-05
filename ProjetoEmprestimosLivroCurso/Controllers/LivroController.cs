@@ -2,11 +2,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using ProjetoEmprestimosLivroCurso.Dto.Livro;
+using ProjetoEmprestimosLivroCurso.Filtros;
 using ProjetoEmprestimosLivroCurso.Models;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
 
 namespace ProjetoEmprestimosLivroCurso.Controllers
 {
+    
+    [UsuarioLogado]
+    [UsuarioLogadoCliente]
     public class LivroController : Controller
     {
         private readonly ILivroInterface _livroInterface;
