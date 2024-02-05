@@ -12,6 +12,6 @@ namespace ProjetoEmprestimosLivroCurso.Dto.Relatorio
         public string Titulo { get; set; }
         public string ISBN { get; set; }
         public DateTime DataEmprestimo { get; set; } = DateTime.Now;
-        public DateTime? DataDevolucao { get; set; }
+        public DateTime DataDevolucao { get; set; }
     }
 }

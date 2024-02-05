@@ -150,5 +150,35 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
             }
 
         }
+
+        public async Task<List<EmprestimoModel>> BuscarEmprestimosGeral(string tipo = null)
+        {
+            try
+            {
+
+                if(tipo == null)
+                {
+                    var emprestimosDevolvidos = await _context.Emprestimos
+                                                .Include(livro => livro.Livro)
+                                                .Include(usuario => usuario.Usuario)
+                                                .Where(emprestimo => emprestimo.DataDevolucao != null).ToListAsync();
+                    return emprestimosDevolvidos;
+                }
+                else
+                {
+                    var emprestimosDevolvidos = await _context.Emprestimos
+                                                .Include(livro => livro.Livro)
+                                                .Include(usuario => usuario.Usuario)
+                                                .Where(emprestimo => emprestimo.DataDevolucao == null).ToListAsync();
+                    return emprestimosDevolvidos;
+                }
+
+
+
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

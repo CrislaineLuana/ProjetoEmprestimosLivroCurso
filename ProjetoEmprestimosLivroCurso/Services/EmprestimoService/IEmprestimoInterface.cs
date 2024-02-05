@@ -9,5 +9,6 @@ namespace ProjetoEmprestimosLivroCurso.Services.EmprestimoService
         Task<List<EmprestimoModel>> BuscarEmprestimos(UsuarioModel usuarioSessao);
 
         Task<EmprestimoModel> Devolver(int id);
+        Task<List<EmprestimoModel>> BuscarEmprestimosGeral(string tipo = null);
     }
 }

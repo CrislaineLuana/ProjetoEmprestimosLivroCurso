@@ -18,7 +18,7 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         private readonly ISessaoInterface _sessaoInterface;
         private readonly ILivroInterface _livroInterface;
         private readonly IUsuarioInterface _usuarioInterface;
-        private readonly IEmprestimoInterface _emprestimo;
+        private readonly IEmprestimoInterface _emprestimoInterface;
         private readonly IRelatorioInterface _relatorioInterface;
         private readonly IMapper _mapper;
 
@@ -32,7 +32,7 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             _sessaoInterface = sessaoInterface;
             _livroInterface = livroInterface;
             _usuarioInterface = usuarioInterface;
-            _emprestimo = emprestimo;
+            _emprestimoInterface = emprestimo;
             _relatorioInterface = relatorioInterface;
             _mapper = mapper;
         }
@@ -53,36 +53,54 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                 case 1:
                     List<LivroModel> livros = await _livroInterface.BuscarLivros();
                     List<LivroRelatorioDto> dadosLivros = _mapper.Map<List<LivroRelatorioDto>>(livros);
+
+                    if(livros.Count() == 0)
+                    {
+                      
+                        TempData["MensagemErro"] = "Não existem dados para esse relatório!";
+                        return RedirectToAction("Index", "Relatorio");
+                    
+                    }
+                    
                     tabela = _relatorioInterface.ColetarDados(dadosLivros, id);
                 break;
                 case 2:
                     List<UsuarioModel> clientes = await _usuarioInterface.BuscarUsuarios(0);
                     List<UsuarioRelatorioDto> dadosClientes = new List<UsuarioRelatorioDto>();
 
-                    foreach (var cliente in  clientes)
+                    if(clientes.Count() > 0)
                     {
-                        dadosClientes.Add(
-                            new UsuarioRelatorioDto
-                            {
-                                Id = cliente.Id,
-                                NomeCompleto = cliente.NomeCompleto,
-                                Usuario = cliente.Usuario,
-                                Email = cliente.Email,
-                                Situacao = cliente.Situacao.ToString(),
-                                Perfil = cliente.Perfil.ToString(),
-                                Turno = cliente.Turno.ToString(),
-                                Logradouro = cliente.Endereco.Logradouro,
-                                Bairro = cliente.Endereco.Bairro,
-                                Numero = cliente.Endereco.Numero,
-                                CEP = cliente.Endereco.CEP,
-                                Estado = cliente.Endereco.Estado,
-                                Complemento = cliente.Endereco.Complemento,
-                                DataCadastro = cliente.DataCadastro,
-                                DataAlteracao = cliente.DataAlteracao
-                            }
+                        foreach (var cliente in clientes)
+                        {
+                            dadosClientes.Add(
+                                new UsuarioRelatorioDto
+                                {
+                                    Id = cliente.Id,
+                                    NomeCompleto = cliente.NomeCompleto,
+                                    Usuario = cliente.Usuario,
+                                    Email = cliente.Email,
+                                    Situacao = cliente.Situacao.ToString(),
+                                    Perfil = cliente.Perfil.ToString(),
+                                    Turno = cliente.Turno.ToString(),
+                                    Logradouro = cliente.Endereco.Logradouro,
+                                    Bairro = cliente.Endereco.Bairro,
+                                    Numero = cliente.Endereco.Numero,
+                                    CEP = cliente.Endereco.CEP,
+                                    Estado = cliente.Endereco.Estado,
+                                    Complemento = cliente.Endereco.Complemento,
+                                    DataCadastro = cliente.DataCadastro,
+                                    DataAlteracao = cliente.DataAlteracao
+                                }
 
-                     );
+                         );
+                        }
                     }
+                    else
+                    {
+                        TempData["MensagemErro"] = "Não existem dados para esse relatório!";
+                        return RedirectToAction("Index", "Relatorio");
+                    }
+                    
 
                     tabela = _relatorioInterface.ColetarDados(dadosClientes, id);
 
@@ -91,33 +109,112 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                     List<UsuarioModel> funcionarios = await _usuarioInterface.BuscarUsuarios(null);
                     List<UsuarioRelatorioDto> dadosFuncionarios = new List<UsuarioRelatorioDto>();
 
-                    foreach (var funcionario in funcionarios)
+                    if(funcionarios.Count() > 0)
                     {
-                        dadosFuncionarios.Add(
-                            new UsuarioRelatorioDto
-                            {
-                                Id = funcionario.Id,
-                                NomeCompleto = funcionario.NomeCompleto,
-                                Usuario = funcionario.Usuario,
-                                Email = funcionario.Email,
-                                Situacao = funcionario.Situacao.ToString(),
-                                Perfil = funcionario.Perfil.ToString(),
-                                Turno = funcionario.Turno.ToString(),
-                                Logradouro = funcionario.Endereco.Logradouro,
-                                Bairro = funcionario.Endereco.Bairro,
-                                Numero = funcionario.Endereco.Numero,
-                                CEP = funcionario.Endereco.CEP,
-                                Estado = funcionario.Endereco.Estado,
-                                Complemento = funcionario.Endereco.Complemento,
-                                DataCadastro = funcionario.DataCadastro,
-                                DataAlteracao = funcionario.DataAlteracao
-                            }
+                        foreach (var funcionario in funcionarios)
+                        {
+                            dadosFuncionarios.Add(
+                                new UsuarioRelatorioDto
+                                {
+                                    Id = funcionario.Id,
+                                    NomeCompleto = funcionario.NomeCompleto,
+                                    Usuario = funcionario.Usuario,
+                                    Email = funcionario.Email,
+                                    Situacao = funcionario.Situacao.ToString(),
+                                    Perfil = funcionario.Perfil.ToString(),
+                                    Turno = funcionario.Turno.ToString(),
+                                    Logradouro = funcionario.Endereco.Logradouro,
+                                    Bairro = funcionario.Endereco.Bairro,
+                                    Numero = funcionario.Endereco.Numero,
+                                    CEP = funcionario.Endereco.CEP,
+                                    Estado = funcionario.Endereco.Estado,
+                                    Complemento = funcionario.Endereco.Complemento,
+                                    DataCadastro = funcionario.DataCadastro,
+                                    DataAlteracao = funcionario.DataAlteracao
+                                }
 
-                     );
+                         );
+                        }
                     }
+                    else
+                    {
+                        TempData["MensagemErro"] = "Não existem dados para esse relatório!";
+                        return RedirectToAction("Index", "Relatorio");
+                    }
+
 
                     tabela = _relatorioInterface.ColetarDados(dadosFuncionarios, id);
 
+                    break;
+                case 4:
+                    List<EmprestimoModel> emprestimos = await _emprestimoInterface.BuscarEmprestimosGeral(null);
+                    List<EmprestimoRelatorioDto> dadosEmprestimos = new List<EmprestimoRelatorioDto>();
+
+                    if (emprestimos.Count > 0)
+                    {
+                        foreach (var emprestimo in emprestimos)
+                        {
+                            dadosEmprestimos.Add(
+                                new EmprestimoRelatorioDto
+                                {
+                                    Id = emprestimo.Id,
+                                    UsuarioId = emprestimo.UsuarioId,
+                                    NomeCompleto = emprestimo.Usuario.NomeCompleto,
+                                    Usuario = emprestimo.Usuario.Usuario,
+                                    LivroId = emprestimo.LivroId,
+                                    ISBN = emprestimo.Livro.ISBN,
+                                    Titulo = emprestimo.Livro.Titulo,
+                                    DataEmprestimo = emprestimo.DataEmprestimo,
+                                    DataDevolucao = (DateTime)emprestimo.DataDevolucao
+                                }
+
+                                );
+                        }
+                    }
+                    else
+                    {
+                        TempData["MensagemErro"] = "Não existem dados para esse relatório!";
+                        return RedirectToAction("Index", "Relatorio");
+                    }
+
+                    tabela = _relatorioInterface.ColetarDados(dadosEmprestimos, id);
+
+
+                    break;
+                case 5:
+                    List<EmprestimoModel> emprestimosPendentes = await _emprestimoInterface.BuscarEmprestimosGeral("pendente");
+                    List<EmprestimoRelatorioDto> dadosEmprestimosPendentes = new List<EmprestimoRelatorioDto>();
+                    
+                    if(emprestimosPendentes.Count> 0)
+                    {
+                        foreach (var emprestimo in emprestimosPendentes)
+                        {
+                            dadosEmprestimosPendentes.Add(
+                                new EmprestimoRelatorioDto
+                                {
+                                    Id = emprestimo.Id,
+                                    UsuarioId = emprestimo.UsuarioId,
+                                    NomeCompleto = emprestimo.Usuario.NomeCompleto,
+                                    Usuario = emprestimo.Usuario.Usuario,
+                                    LivroId = emprestimo.LivroId,
+                                    ISBN = emprestimo.Livro.ISBN,
+                                    Titulo = emprestimo.Livro.Titulo,
+                                    DataEmprestimo = emprestimo.DataEmprestimo
+                                }
+
+                                );
+                        }
+                    }
+                    else
+                    {
+                        TempData["MensagemErro"] = "Não existem dados para esse relatório!";
+                        return RedirectToAction("Index", "Relatorio");
+                    }
+                        
+                    
+                    
+
+                    tabela = _relatorioInterface.ColetarDados(dadosEmprestimosPendentes, id);
                     break;
             }
 

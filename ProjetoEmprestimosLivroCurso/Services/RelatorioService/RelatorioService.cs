@@ -64,7 +64,24 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
 
 
                     break;
-              
+                case 4:
+                    var dadosEmprestimo = JsonConvert.SerializeObject(dados);
+                    var dadosEmprestimoModel = JsonConvert.DeserializeObject<List<EmprestimoRelatorioDto>>(dadosEmprestimo);
+                    if (dadosEmprestimoModel != null)
+                    {
+                        return ExportarEmprestimo(dataTable, dadosEmprestimoModel);
+                    }
+                    break;
+                case 5:
+                    var dadosEmprestimoPendentes = JsonConvert.SerializeObject(dados);
+                    var dadosEmprestimoPendentesModel = JsonConvert.DeserializeObject<List<EmprestimoRelatorioDto>>(dadosEmprestimoPendentes);
+                    if (dadosEmprestimoPendentesModel != null)
+                    {
+                        return ExportarEmprestimoPendentes(dataTable, dadosEmprestimoPendentesModel);
+                    }
+                    break;
+
+                    break;
             }
 
             return new DataTable();
@@ -89,6 +106,27 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
             foreach (var dado in dados)
             {
                 data.Rows.Add(dado.Id, dado.NomeCompleto, dado.Usuario, dado.Email, dado.Situacao == "True" ? "Ativo" : "Inativo", dado.Perfil, dado.Turno,dado.Logradouro, dado.Bairro, dado.Numero, dado.CEP, dado.Estado, dado.Complemento, dado.DataCadastro, dado.DataAlteracao);
+            }
+
+            return data;
+        }
+
+
+        public DataTable ExportarEmprestimo(DataTable data, List<EmprestimoRelatorioDto> dados)
+        {
+            foreach (var dado in dados)
+            {
+                data.Rows.Add(dado.Id, dado.UsuarioId, dado.NomeCompleto, dado.Usuario, dado.LivroId, dado.Titulo, dado.ISBN, dado.DataEmprestimo, dado.DataDevolucao);
+            }
+
+            return data;
+        }
+
+        public DataTable ExportarEmprestimoPendentes(DataTable data, List<EmprestimoRelatorioDto> dados)
+        {
+            foreach (var dado in dados)
+            {
+                data.Rows.Add(dado.Id, dado.UsuarioId, dado.NomeCompleto, dado.Usuario, dado.LivroId, dado.Titulo, dado.ISBN, dado.DataEmprestimo);
             }
 
             return data;
