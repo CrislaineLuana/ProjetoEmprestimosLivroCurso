@@ -1,9 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using ProjetoEmprestimosLivroCurso.Data;
 using ProjetoEmprestimosLivroCurso.Services.Autenticacao;
 using ProjetoEmprestimosLivroCurso.Services.EmprestimoService;
 using ProjetoEmprestimosLivroCurso.Services.HomeService;
 using ProjetoEmprestimosLivroCurso.Services.LivroService;
+using ProjetoEmprestimosLivroCurso.Services.RelatorioService;
 using ProjetoEmprestimosLivroCurso.Services.SessaoService;
 using ProjetoEmprestimosLivroCurso.Services.UsuarioService;
 
@@ -24,6 +26,7 @@ builder.Services.AddScoped<IAutenticacaoInterface, AutenticacaoService>();
 builder.Services.AddScoped<ISessaoInterface, SessaoService>();
 builder.Services.AddScoped<IHomeInterface, HomeService>();
 builder.Services.AddScoped<IEmprestimoInterface, EmprestimoService>();
+builder.Services.AddScoped<IRelatorioInterface, RelatorioService>();
 
 builder.Services.AddAutoMapper(typeof(Program));
 
