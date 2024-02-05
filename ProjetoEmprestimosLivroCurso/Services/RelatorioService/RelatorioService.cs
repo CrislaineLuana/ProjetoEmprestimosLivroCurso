@@ -49,8 +49,19 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
                     var dadosClientesModel = JsonConvert.DeserializeObject<List<UsuarioRelatorioDto>>(dadosCliente);
                     if(dadosClientesModel != null)
                     {
-                        return ExportarCliente(dataTable, dadosClientesModel);
+                        return ExportarUsuario(dataTable, dadosClientesModel);
                     }
+
+                    break;
+                case 3:
+
+                    var dadosFuncionario = JsonConvert.SerializeObject(dados);
+                    var dadosFuncionarioModel = JsonConvert.DeserializeObject<List<UsuarioRelatorioDto>>(dadosFuncionario);
+                    if (dadosFuncionarioModel != null)
+                    {
+                        return ExportarUsuario(dataTable, dadosFuncionarioModel);
+                    }
+
 
                     break;
               
@@ -73,7 +84,7 @@ namespace ProjetoEmprestimosLivroCurso.Services.RelatorioService
         }
 
 
-        public DataTable ExportarCliente(DataTable data, List<UsuarioRelatorioDto> dados)
+        public DataTable ExportarUsuario(DataTable data, List<UsuarioRelatorioDto> dados)
         {
             foreach (var dado in dados)
             {

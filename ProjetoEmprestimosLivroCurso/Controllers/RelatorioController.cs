@@ -87,6 +87,38 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
                     tabela = _relatorioInterface.ColetarDados(dadosClientes, id);
 
                 break;
+                case 3:
+                    List<UsuarioModel> funcionarios = await _usuarioInterface.BuscarUsuarios(null);
+                    List<UsuarioRelatorioDto> dadosFuncionarios = new List<UsuarioRelatorioDto>();
+
+                    foreach (var funcionario in funcionarios)
+                    {
+                        dadosFuncionarios.Add(
+                            new UsuarioRelatorioDto
+                            {
+                                Id = funcionario.Id,
+                                NomeCompleto = funcionario.NomeCompleto,
+                                Usuario = funcionario.Usuario,
+                                Email = funcionario.Email,
+                                Situacao = funcionario.Situacao.ToString(),
+                                Perfil = funcionario.Perfil.ToString(),
+                                Turno = funcionario.Turno.ToString(),
+                                Logradouro = funcionario.Endereco.Logradouro,
+                                Bairro = funcionario.Endereco.Bairro,
+                                Numero = funcionario.Endereco.Numero,
+                                CEP = funcionario.Endereco.CEP,
+                                Estado = funcionario.Endereco.Estado,
+                                Complemento = funcionario.Endereco.Complemento,
+                                DataCadastro = funcionario.DataCadastro,
+                                DataAlteracao = funcionario.DataAlteracao
+                            }
+
+                     );
+                    }
+
+                    tabela = _relatorioInterface.ColetarDados(dadosFuncionarios, id);
+
+                    break;
             }
 
 
