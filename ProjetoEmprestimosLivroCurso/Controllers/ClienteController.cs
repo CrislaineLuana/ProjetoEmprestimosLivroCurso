@@ -21,6 +21,18 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
         }
         public async Task<ActionResult> Index(int? id)
         {
+            var usuarioSessao = _sessaoInterface.BuscarSessao();
+
+            if (usuarioSessao != null)
+            {
+                ViewBag.UsuarioLogado = usuarioSessao.Id;
+                ViewBag.LayoutPagina = "_Layout";
+            }
+            else
+            {
+                ViewBag.LayoutPagina = "_LayoutDeslogada";
+            }
+
             var clientes = await _usuarioInterface.BuscarUsuarios(id);
             return View(clientes);
         }

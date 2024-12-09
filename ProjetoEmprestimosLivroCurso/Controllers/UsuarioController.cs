@@ -118,7 +118,7 @@ namespace ProjetoEmprestimosLivroCurso.Controllers
             else
             {
                 TempData["MensagemErro"] = "Verifique os dados informados!";
-                return View(usuarioCriacaoDto);
+                return RedirectToAction("Cadastrar", new {id = 1});
             }
         }
 
